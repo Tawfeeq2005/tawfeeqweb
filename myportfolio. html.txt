@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mohamed Tawfeeq A — Portfolio</title>
+<style>
+  /* Base */
+  :root{
+    --accent:#003366;
+    --accent-light:#eef5ff;
+    --muted:#666;
+    --card-bg:#ffffff;
+    --glass: rgba(255,255,255,0.6);
+  }
+  html{scroll-behavior:smooth; scroll-padding-top:140px}
+  body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f4f6fa;color:#222}
+
+  /* Header */
+  header{position:fixed;top:0;left:0;right:0;height:60px;background:var(--accent);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:1200}
+  header .left{display:flex;align-items:center;gap:12px}
+  header img{width:40px;height:40px;object-fit:cover;border-radius:50%;border:2px solid rgba(255,255,255,0.12)}
+  header nav a{color:white;text-decoration:none;margin:0 10px;font-weight:600}
+  header nav a:hover{color:#ffd24d}
+
+  /* Intro bar under header */
+  .intro-bar{background:var(--accent);color:white;display:flex;align-items:center;gap:22px;padding:30px 20px;margin-top:60px}
+  .intro-bar .intro-img{width:150px;height:150px;object-fit:cover;border:4px solid #fff}
+  .intro-bar .intro-text h1{margin:0;font-size:2.2rem;letter-spacing:0.6px}
+  .intro-bar .intro-text p{margin:6px 0 0;font-size:1rem;color:#e6eefb}
+
+  /* Page sections */
+  main{max-width:1200px;margin:32px auto;padding:0 20px 60px}
+  section{background:var(--card-bg);padding:28px;border-radius:10px;box-shadow:0 6px 18px rgba(20,30,60,0.06);margin-bottom:28px}
+  h2{margin:0 0 18px;padding-bottom:8px;border-bottom:2px solid #eee;color:var(--accent)}
+
+  /* Skills grid */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .skill{background:var(--accent-light);padding:18px;border-radius:10px;text-align:center;transition:transform .28s ease,box-shadow .28s ease;opacity:0;transform:translateY(20px)}
+  .skill span{display:block;font-weight:700;color:var(--accent);margin-bottom:8px}
+  .skill small{display:block;color:var(--muted)}
+  .skill:hover{transform:translateY(-6px);box-shadow:0 8px 24px rgba(3,40,90,0.12)}
+
+  /* Dropdown style (custom) */
+  .dropdown{background:var(--accent-light);border-radius:10px;padding:14px;margin-bottom:12px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.06);opacity:0;transform:translateY(20px);transition:transform .28s ease,box-shadow .28s ease,opacity .4s}
+  .dropdown .head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .dropdown .head strong{color:var(--accent)}
+  .dropdown .period{color:#0a6fb6;font-weight:700}
+  .dropdown .content{display:none;margin-top:12px;padding-top:10px;border-top:1px dashed rgba(0,0,0,0.06)}
+  .dropdown.open .content{display:block}
+  .dropdown .content p{margin:6px 0;color:#333}
+
+  /* Experience boxes */
+  .experience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .exp-card{background:linear-gradient(180deg,#fff,#f7fbff);padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(10,30,80,0.04);opacity:0;transform:translateY(20px)}
+  .exp-card h4{margin:0 0 8px;color:var(--accent)}
+  .exp-card p{margin:0;color:#444}
+
+  /* Internships split */
+  .intern-split{display:flex;gap:18px;flex-wrap:wrap}
+  .intern-panel{flex:1;min-width:280px}
+  .day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .day{background:#fff;padding:8px;border-radius:6px;text-align:center;border:1px solid #eee}
+
+  /* Certifications */
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .cert-thumb{background:#fff;padding:12px;border-radius:8px;text-align:center;cursor:pointer}
+  .cert-thumb img{max-width:100%;height:140px;object-fit:contain;border-radius:4px}
+
+  /* Startup box */
+  .startup{background:var(--accent-light);padding:18px;border-radius:10px}
+  .startup .two{display:flex;gap:14px;flex-wrap:wrap}
+  .vision, .mission{flex:1;min-width:240px;background:#fff;padding:12px;border-radius:8px}
+  .services{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .service-pill{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;font-weight:600}
+
+  /* Contact */
+  .contact-form{max-width:480px;margin:18px auto;display:flex;flex-direction:column;gap:10px}
+  .contact-form input, .contact-form textarea{padding:12px;border-radius:8px;border:1px solid #ddd}
+  .contact-form button{background:var(--accent);color:white;padding:12px;border-radius:8px;border:none;cursor:pointer}
+
+  /* Footer */
+  footer{background:var(--accent);color:white;padding:12px;text-align:center}
+
+  /* Fade-in class for scroll animations */
+  .fade-in{opacity:1!important;transform:translateY(0)!important;transition:opacity .6s ease-out,transform .6s ease-out}
+
+  /* Responsive tweaks */
+  @media (max-width:720px){
+    .intro-bar{flex-direction:column;align-items:flex-start;padding:18px}
+    .intro-bar img{width:110px;height:110px}
+    header nav{display:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="left">
+    <img src="profile.jpg" alt="Profile">
+    <div>
+      <div style="font-weight:700">Mohamed Tawfeeq A</div>
+      <div style="font-size:12px;opacity:.9">Biomedical Engineering Student</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#experience">Experience</a>
+    <a href="#internships">Internships</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#startup">EFX</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- Intro bar -->
+<div class="intro-bar">
+  <img class="intro-img" src="profile.jpg" alt="Profile large">
+  <div class="intro-text">
+    <h1>Mohamed Tawfeeq A</h1>
+    <p>BIOMEDICAL ENGINEERING STUDENT | IoT ENTHUSIAST | DESIGNER</p>
+    <div style="margin-top:10px;color:#e6eefb">📞 +91 9025949602 &nbsp; • &nbsp; ✉ muhammedtawfeeq7@gmail.com</div>
+  </div>
+</div>
+
+<main>
+  <!-- About -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p>Motivated and enthusiastic <strong>Biomedical Engineering student</strong> with hands-on experience in embedded systems, IoT, medical device prototyping, and design. I enjoy building practical solutions that connect technology with healthcare.</p>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill"><span>Programming</span><small>C, Python, Java</small></div>
+      <div class="skill"><span>Frameworks</span><small>Flask, TensorFlow</small></div>
+      <div class="skill"><span>Tools</span><small>MATLAB, KiCad, Figma, Framer, Blender, Adobe CC</small></div>
+      <div class="skill"><span>Platforms</span><small>VS Code, Google Colab, Kaggle, GitHub</small></div>
+      <div class="skill"><span>Soft Skills</span><small>Leadership, Communication, Teamwork, Time Management</small></div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <h2>Education</h2>
+
+    <div class="dropdown" role="button" aria-expanded="false">
+      <div class="head" onclick="this.closest('.dropdown').classList.toggle('open');">
+        <strong>KPR Institute of Engineering and Technology</strong>
+        <span class="period">2023 - 2027</span>
+      </div>
+      <div class="content">
+        <p><strong>B.E. Biomedical Engineering</strong> — CGPA: 7.2</p>
+        <p>Positions: Designer (IEEE, Rotaract) • Member (BMESI, Medico Sapiens)</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 1</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 2</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 3</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 4</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 5</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 6</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 7</div>
+          <div style="background:#fff;padding:8px;border-radius:6px;border:1px solid #eee">Sem 8</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown" role="button" aria-expanded="false">
+      <div class="head" onclick="this.closest('.dropdown').classList.toggle('open');">
+        <strong>NEHRUJI MEMORIAL MUNICIPAL HIGHER SECONDARY SCHOOL</strong>
+        <span class="period">2023</span>
+      </div>
+      <div class="content">
+        <p><strong>H.S</strong> — State Board syllabus</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="experience-grid">
+      <div class="exp-card">
+        <h4>Senior Designer</h4>
+        <p>Marketing Nerves (Startup) — Social media, posters, content, websites.</p>
+      </div>
+      <div class="exp-card">
+        <h4>Designer</h4>
+        <p>IEEE & Rotaract — Event visuals and branding.</p>
+      </div>
+      <div class="exp-card">
+        <h4>Member</h4>
+        <p>BMESI & Medico Sapiens — Collaborative projects and workshops.</p>
+      </div>
+      <div class="exp-card">
+        <h4>Photographer & Videographer</h4>
+        <p>Event photography, product shoots and post-production (5 sample works — add later).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internships -->
+  <section id="internships">
+    <h2>Internships</h2>
+    <div class="intern-split">
+      <div class="intern-panel">
+        <div class="dropdown">
+          <div class="head" onclick="this.closest('.dropdown').classList.toggle('open');">
+            <strong>Hospital — Dr. Mehta's Multispeciality Hospital</strong>
+            <span class="period">Jan 2025</span>
+          </div>
+          <div class="content">
+            <p>15-day onsite internship with practical exposure to biomedical equipment and maintenance under Dr. Banu Rekha & Dr. Ponmuthu Raman.</p>
+            <div class="day-grid">
+              <div class="day">Day 1</div><div class="day">Day 2</div><div class="day">Day 3</div>
+              <div class="day">Day 4</div><div class="day">Day 5</div><div class="day">Day 6</div>
+              <div class="day">Day 7</div><div class="day">Day 8</div><div class="day">Day 9</div>
+              <div class="day">Day 10</div><div class="day">Day 11</div><div class="day">Day 12</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="intern-panel">
+        <div class="dropdown">
+          <div class="head" onclick="this.closest('.dropdown').classList.toggle('open');">
+            <strong>Industry — Xpert Automatix</strong>
+            <span class="period">Jun - Jul 2025</span>
+          </div>
+          <div class="content">
+            <p>Embedded design, microcontrollers, IoT devices and PCB component design using KiCad.</p>
+            <div class="day-grid">
+              <div class="day">Day 1</div><div class="day">Day 2</div><div class="day">Day 3</div>
+              <div class="day">Day 4</div><div class="day">Day 5</div><div class="day">Day 6</div>
+              <div class="day">Day 7</div><div class="day">Day 8</div><div class="day">Day 9</div>
+              <div class="day">Day 10</div><div class="day">Day 11</div><div class="day">Day 12</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certifications">
+    <h2>Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-thumb" onclick="openModal('cert1')"><img src="cert1.jpg" alt="certificate 1"></div>
+      <div class="cert-thumb" onclick="openModal('cert2')"><img src="cert2.jpg" alt="certificate 2"></div>
+      <div class="cert-thumb" onclick="openModal('cert3')"><img src="cert3.jpg" alt="certificate 3"></div>
+    </div>
+  </section>
+
+  <!-- Startup -->
+  <section id="startup">
+    <h2>EFX MARKETING SOLUTION</h2>
+    <div class="startup">
+      <div class="two">
+        <div class="vision"><strong>Vision</strong>
+          <ol>
+            <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
+          </ol>
+        </div>
+        <div class="mission"><strong>Mission</strong>
+          <ol>
+            <li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li><li>&nbsp;</li>
+          </ol>
+        </div>
+      </div>
+      <h3 style="margin-top:14px">Our Services</h3>
+      <div class="services">
+        <div class="service-pill">Poster Designing</div>
+        <div class="service-pill">Front End Developing</div>
+        <div class="service-pill">Photo Editing</div>
+        <div class="service-pill">Video Editing</div>
+        <div class="service-pill">Logo Designing</div>
+        <div class="service-pill">Masking</div>
+        <div class="service-pill">Photo Shooting</div>
+        <div class="service-pill">Catalogue / Brochure Designing</div>
+        <div class="service-pill">Portfolio / Website Designing</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form class="contact-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="tel" name="mobile" placeholder="Mobile Number" required>
+      <input type="email" name="email" placeholder="Email ID" required>
+      <textarea name="requirements" placeholder="Your Requirements" rows="5"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+</main>
+
+<!-- Image modal for viewing certificates -->
+<div id="modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;z-index:1400">
+  <div style="max-width:90%;max-height:90%;background:white;padding:12px;border-radius:8px;position:relative">
+    <button onclick="closeModal()" style="position:absolute;right:8px;top:8px;background:#003366;color:white;border:none;padding:8px;border-radius:6px;cursor:pointer">Close</button>
+    <img id="modal-img" src="" style="max-width:100%;max-height:80vh;display:block;margin:0 auto;border-radius:6px" alt="certificate"/>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Mohamed Tawfeeq A &nbsp;|&nbsp; <a href="mailto:muhammedtawfeeq7@gmail.com" style="color:#fff;text-decoration:underline">muhammedtawfeeq7@gmail.com</a> &nbsp;|&nbsp; +91 9025949602
+</footer>
+
+<script>
+/* --- Safe dropdowns: attach toggle handlers to all .dropdown .head elements --- */
+(() => {
+  document.querySelectorAll('.dropdown .head').forEach(head => {
+    head.addEventListener('click', () => {
+      const container = head.closest('.dropdown');
+      if (!container) return; // safety
+      container.classList.toggle('open');
+    });
+  });
+})();
+
+/* --- Modal for certificates --- */
+function openModal(id){
+  // map id to image - in practice, replace with real file paths
+  const map = {
+    'cert1':'cert1.jpg',
+    'cert2':'cert2.jpg',
+    'cert3':'cert3.jpg'
+  };
+  const src = map[id] || id;
+  const modal = document.getElementById('modal');
+  const img = document.getElementById('modal-img');
+  img.src = src;
+  modal.style.display = 'flex';
+}
+function closeModal(){document.getElementById('modal').style.display='none';}
+
+/* --- Scroll reveal using IntersectionObserver --- */
+(() => {
+  const obsOptions = {threshold:0.12};
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('fade-in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, obsOptions);
+
+  // observe relevant elements
+  document.querySelectorAll('.skill, .exp-card, .dropdown').forEach(el => observer.observe(el));
+})();
+
+/* --- Prevent dropdown errors: fallback if old inline toggleDropdown(id) used elsewhere --- */
+function toggleDropdown(id){
+  try{
+    const el = document.getElementById(id);
+    if(el){
+      // if the provided id refers to a content element, toggle parent
+      const parent = el.closest('.dropdown') || el;
+      parent.classList.toggle('open');
+    } else {
+      console.warn('toggleDropdown: element with id', id, 'not found');
+    }
+  }catch(e){
+    console.error('toggleDropdown error', e);
+  }
+}
+</script>
+</body>
+</html>
